@@ -1,5 +1,5 @@
 export class UpdateAddressDto {
-  readonly id: string;
+  id?: string;
   readonly city: string;
   readonly street: string;
 }

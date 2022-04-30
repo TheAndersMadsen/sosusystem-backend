@@ -14,29 +14,29 @@ import { AddressService } from './Address.service';
 import { Address } from './entities/Address.entity';
 import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
 
-@Controller('Addresss')
+@Controller('address')
 @UseInterceptors(MongooseClassSerializerInterceptor(Address))
 export class AddressController {
-  constructor(private AddressService: AddressService) {}
+  constructor(private addressService: AddressService) {}
 
   @Get()
   async findAll(): Promise<Array<Address>> {
-    return await this.AddressService.findAll();
+    return await this.addressService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param() param): Promise<Address> {
-    return await this.AddressService.findOne(param.id);
+    return await this.addressService.findOne(param.id);
   }
 
   @Post()
   async create(@Body() createAddressDto: CreateAddressDto): Promise<Address> {
-    return await this.AddressService.create(createAddressDto);
+    return await this.addressService.create(createAddressDto);
   }
 
   @Delete(':id')
   async delete(@Param() param): Promise<Address> {
-    return await this.AddressService.delete(param.id);
+    return await this.addressService.delete(param.id);
   }
 
   @Put(':id')
@@ -44,6 +44,6 @@ export class AddressController {
     @Body() updateAddressDto: UpdateAddressDto,
     @Param() param,
   ): Promise<Address> {
-    return await this.AddressService.update(param.id, updateAddressDto);
+    return await this.addressService.update(param.id, updateAddressDto);
   }
 }

@@ -6,13 +6,17 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
+import MongooseClassSerializerInterceptor from '../utils/mongooseClassSerializer.interceptor';
+import { UpdateAddressDto } from '../address/dto/update-address.dto';
 
 @Controller('users')
+@UseInterceptors(MongooseClassSerializerInterceptor(User))
 export class UserController {
   constructor(private userService: UserService) {}
 
@@ -37,7 +41,10 @@ export class UserController {
   }
 
   @Put(':id')
-  async update(@Body() updateUserDto: UpdateUserDto, @Param() param): Promise<User> {
+  async update(
+    @Body() updateUserDto: UpdateUserDto,
+    @Param() param,
+  ): Promise<User> {
     return await this.userService.update(param.id, updateUserDto);
   }
 }
